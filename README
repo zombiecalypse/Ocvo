@@ -1,0 +1,23 @@
+# Ocvo - OpenCV Objects #
+[OpenCV](http://opencv.willowgarage.com/wiki/) is a great library for Computer
+Vision, but the Python bindings are just 1300+ functions, constants, and
+structs thrown together. This package tries to wrap the library in a more
+structured way.
+## Installation ##
+run `python setup.py install` and enjoy the pre-alpha
+not-even-a-real-release-yet.
+## Use ##
+`import ocvo.{submodule}` 
+The current submodules are:
+
+* `objects` is the base. For now, it provides object wrappers for Images and
+  Captures.
+* `shapes` gives you objects/shapes that can be drawn on images. 
+* `labeled` will have similar objects, but will include ports for text input.
+
+## Known Issues ##
+* No documentation
+* Few features
+
+## Copyright ##
+(c) Aaron Karper 2010
