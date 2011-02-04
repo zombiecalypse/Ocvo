@@ -7,19 +7,41 @@
 import cv
 
 from shapes import *
+from helpers import Struct
 
 
 
-class Image(object):
+class Image(
+		Struct("channels", "depth", "height", "nChannels", "origin",
+			"tostring", "width")):
 	def __init__(self, frame):
 		self.raw = frame
 	@staticmethod
 	def fromFile(filename):
-		return Image(cv.iplimage(filename))
+		return Image(cv.LoadImage(filename))
 	def meFromFile(self,filename):
-		self.raw = cv.iplimage(filename)
+		self.raw = cv.LoadImage(filename)
 	def draw(self,shape):
 		shape.drawOn(self)
+	@property
+	def dim(self):
+		return self.raw.width,self.raw.height
+	def toBw(self):
+		new = cv.CreateImage(self.dim,cv.IPL_DEPTH_8U,1)
+		cv.CvtColor(self.raw,new,cv.CV_BGR2GRAY)
+		return Image(new)
+	def subrect(self,rect,*args):
+		try:
+			x1,y1,x2,y2 = rect
+		except:
+			try:
+				(x1,y1),(x2,y2) = rect
+			except:
+				x1 = rect
+				y1,x2,y2 = args[:3]
+		return Image(cv.GetSubRect(self.raw,(x1,y1,x2-x1,y2-y1)))
+	def toFile(self,filename):
+		return cv.SaveImage(filename,self.raw)
 class Capture(object):
 	@staticmethod
 	def fromUrl(url):

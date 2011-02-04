@@ -17,11 +17,15 @@ def alltuple(lst):
 	else:
 		return lst
 
-def Struct(*attrs):
+def Struct(*attrs,**opts):
 	dict = {}
+	if opts.has_key("key"):
+		key = opts["key"]
+	else:
+		key = "raw"
 	for i in attrs:
-		dict[i]= property(lambda slf: getattr(slf._raw,i))
-	return type('Struct',tuple(),dict)
+		dict[i]= property(lambda slf: getattr(getattr(slf,key),i),doc="%s.%s" % (key,i))
+	return type('Struct',(object,),dict)
 
 #class Struct(type):
 	#def __new__(self,name,bases,dict):
