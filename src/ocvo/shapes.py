@@ -42,8 +42,8 @@ class Rectangle(SimpleShape):
 		cv.Rectangle(img,self.bottomleft,self.topright,
 				self.color,**self.args)
 class PolyLine(SimpleShape):
-	def __init__(self, close = False, *points, **args):
-		Shape.__init__(self,**args)
+	def __init__(self,  points, close = False,**args):
+		SimpleShape.__init__(self,**args)
 		self.points = _h.allint(points)
 		self.close = close
 	def drawOn(self,img):

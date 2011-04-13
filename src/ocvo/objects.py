@@ -21,6 +21,9 @@ class Image(
 		return Image(cv.LoadImage(filename))
 	def meFromFile(self,filename):
 		self.raw = cv.LoadImage(filename)
+	@staticmethod
+	def create(rows,columns,channels=4,depth=8):
+		return Image(cv.CreateImage((rows,columns),depth,channels))
 	def draw(self,shape):
 		shape.drawOn(self)
 	@property
